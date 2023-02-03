@@ -174,7 +174,7 @@ namespace WebApiCore.Controllers
                 return new JsonResult("anonymous.png");
             }
         }
-
+        [HttpGet]
         [Route("GetAllDepartmentNames")]
         public JsonResult GetAllDepartmentNames()
         {

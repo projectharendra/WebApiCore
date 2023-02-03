@@ -24,6 +24,7 @@ namespace WebApiCore.Controllers
             _configuration = configuration;
             _env = env;
         }
+        [HttpGet]
         [Route("GetAllUsers")]
         public JsonResult GetAllUsers()
         {
