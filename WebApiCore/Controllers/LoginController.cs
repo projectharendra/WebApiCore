@@ -147,51 +147,6 @@ namespace WebApiCore.Controllers
             return new APIResponse { keycode = string.Empty, result = result };
         }
 
-        //var tokenHandler = new JwtSecurityTokenHandler();
-        //var securityToken = (JwtSecurityToken)tokenHandler.ReadToken(token.JWTToken);
-        //var username = securityToken.Claims.FirstOrDefault(c => c.Type == "unique_name")?.Value;
-
-
-        ////var username = principal.Identity.Name;
-        //var _reftable = _context.TblRefreshtoken.FirstOrDefault(o => o.UserId == username && o.RefreshToken == token.RefreshToken);
-        //if (_reftable == null)
-        //{
-        //    return Unauthorized();
-        //}
-        //TokenResponse _result = Authenticate(username, securityToken.Claims.ToArray());
-        //return Ok(_result);
-
-
-        // GET: api/<LoginController>
-        //[HttpGet]
-        //public IEnumerable<string> Get()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
-
-        //// GET api/<LoginController>/5
-        //[HttpGet("{id}")]
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
-
-        //// POST api/<LoginController>
-        //[HttpPost]
-        //public void Post([FromBody] string value)
-        //{
-        //}
-
-        //// PUT api/<LoginController>/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
-
-        //// DELETE api/<LoginController>/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
+        
     }
 }
