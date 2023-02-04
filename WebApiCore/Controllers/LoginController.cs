@@ -114,6 +114,43 @@ namespace WebApiCore.Controllers
             return Ok(_result);
         }
 
+        [Route("GetMenubyRole/{role}")]
+        [HttpGet]
+        public IActionResult GetMenubyRole(string role)
+        {
+            var _result = (from q1 in _context.TblPermission.Where(item => item.RoleId == role)
+                           join q2 in _context.TblMenu
+                           on q1.MenuId equals q2.Id
+                           select new { q1.MenuId, q2.Name, q2.LinkName }).ToList();
+            // var _result = context.TblPermission.Where(o => o.RoleId == role).ToList();
+
+            return Ok(_result);
+        }
+
+        [Route("HaveAccess")]
+        [HttpGet]
+        public IActionResult HaveAccess(string role, string menu)
+        {
+            APIResponse result = new APIResponse();
+            //var username = principal.Identity.Name;
+            var _result = _context.TblPermission.Where(o => o.RoleId == role && o.MenuId == menu).FirstOrDefault();
+            if (_result != null)
+            {
+                result.result = "pass";
+            }
+            return Ok(result);
+        }
+
+        [Route("GetAllRole")]
+        [HttpGet]
+        public IActionResult GetAllRole()
+        {
+            var _result = _context.TblRole.ToList();
+            // var _result = context.TblPermission.Where(o => o.RoleId == role).ToList();
+
+            return Ok(_result);
+        }
+
         [HttpPost("Register")]
         public APIResponse Register([FromBody] TblUserMaster value)
         {
