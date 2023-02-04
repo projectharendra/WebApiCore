@@ -28,8 +28,8 @@ namespace WebApiCore.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=LAPTOP-34RBJQ60;Database=DemoDb;User ID=sa;Password=Passw0rd;");
+//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+//                optionsBuilder.UseSqlServer("Server=LAPTOP-34RBJQ60;Database=DemoDb;User ID=sa;Password=Passw0rd;");
             }
         }
 
@@ -179,6 +179,10 @@ namespace WebApiCore.Models
                 entity.Property(e => e.Id)
                     .HasColumnName("id")
                     .ValueGeneratedOnAdd();
+
+                entity.Property(e => e.Isactive)
+                    .HasColumnName("isactive")
+                    .HasDefaultValueSql("((1))");
 
                 entity.Property(e => e.Password)
                     .HasColumnName("password")
