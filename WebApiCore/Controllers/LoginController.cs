@@ -132,7 +132,7 @@ namespace WebApiCore.Controllers
                         Username = value.Username!=null?value.Username:value.Userid,
                         Email = value.Email,
                         Userid = value.Userid,
-                        Role = 'user',
+                        Role = "user",
                         Password = value.Password
                     };
                     _context.TblUserMaster.Add(tblUser);
