@@ -20,7 +20,10 @@ namespace WebApiCore.Models
         public virtual DbSet<TblCrudNetCore> TblCrudNetCore { get; set; }
         public virtual DbSet<TblDesignation> TblDesignation { get; set; }
         public virtual DbSet<TblEmployee> TblEmployee { get; set; }
+        public virtual DbSet<TblMenu> TblMenu { get; set; }
+        public virtual DbSet<TblPermission> TblPermission { get; set; }
         public virtual DbSet<TblRefreshtoken> TblRefreshtoken { get; set; }
+        public virtual DbSet<TblRole> TblRole { get; set; }
         public virtual DbSet<TblUser> TblUser { get; set; }
         public virtual DbSet<TblUserMaster> TblUserMaster { get; set; }
 
@@ -28,8 +31,8 @@ namespace WebApiCore.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-//                optionsBuilder.UseSqlServer("Server=LAPTOP-34RBJQ60;Database=DemoDb;User ID=sa;Password=Passw0rd;");
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                optionsBuilder.UseSqlServer("Server=LAPTOP-34RBJQ60;Database=DemoDb;User ID=sa;Password=Passw0rd;");
             }
         }
 
@@ -118,6 +121,38 @@ namespace WebApiCore.Models
                     .IsUnicode(false);
             });
 
+            modelBuilder.Entity<TblMenu>(entity =>
+            {
+                entity.ToTable("tbl_menu");
+
+                entity.Property(e => e.Id)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.LinkName)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Name)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<TblPermission>(entity =>
+            {
+                entity.HasKey(e => new { e.RoleId, e.MenuId });
+
+                entity.ToTable("tbl_permission");
+
+                entity.Property(e => e.RoleId)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.MenuId)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+            });
+
             modelBuilder.Entity<TblRefreshtoken>(entity =>
             {
                 entity.HasNoKey();
@@ -135,6 +170,21 @@ namespace WebApiCore.Models
                     .IsUnicode(false);
 
                 entity.Property(e => e.UserId)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<TblRole>(entity =>
+            {
+                entity.HasKey(e => e.Roleid);
+
+                entity.ToTable("tbl_role");
+
+                entity.Property(e => e.Roleid)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Name)
                     .HasMaxLength(50)
                     .IsUnicode(false);
             });
