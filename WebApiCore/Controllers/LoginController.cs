@@ -64,9 +64,8 @@ namespace WebApiCore.Controllers
                 Subject = new ClaimsIdentity(
                     new Claim[]
                     {
-                        new Claim(ClaimTypes.Name, _user.Userid)
-                        //,
-                        //new Claim(ClaimTypes.Role, _user.Role)
+                        new Claim(ClaimTypes.Name, _user.Userid),
+                        new Claim(ClaimTypes.Role, _user.Role)
 
                     }
                 ),
