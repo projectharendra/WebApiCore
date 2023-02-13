@@ -17,13 +17,18 @@ namespace WebApiCore.Models
 
         public virtual DbSet<Department> Department { get; set; }
         public virtual DbSet<Employee> Employee { get; set; }
+        public virtual DbSet<TblCategory> TblCategory { get; set; }
         public virtual DbSet<TblCrudNetCore> TblCrudNetCore { get; set; }
+        public virtual DbSet<TblCustomer> TblCustomer { get; set; }
         public virtual DbSet<TblDesignation> TblDesignation { get; set; }
         public virtual DbSet<TblEmployee> TblEmployee { get; set; }
         public virtual DbSet<TblMenu> TblMenu { get; set; }
         public virtual DbSet<TblPermission> TblPermission { get; set; }
+        public virtual DbSet<TblProduct> TblProduct { get; set; }
         public virtual DbSet<TblRefreshtoken> TblRefreshtoken { get; set; }
         public virtual DbSet<TblRole> TblRole { get; set; }
+        public virtual DbSet<TblSalesHeader> TblSalesHeader { get; set; }
+        public virtual DbSet<TblSalesProductInfo> TblSalesProductInfo { get; set; }
         public virtual DbSet<TblUser> TblUser { get; set; }
         public virtual DbSet<TblUserMaster> TblUserMaster { get; set; }
 
@@ -31,8 +36,8 @@ namespace WebApiCore.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=LAPTOP-34RBJQ60;Database=DemoDb;User ID=sa;Password=Passw0rd;");
+//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+//                optionsBuilder.UseSqlServer("Server=LAPTOP-34RBJQ60;Database=DemoDb;User ID=sa;Password=Passw0rd;");
             }
         }
 
@@ -70,6 +75,11 @@ namespace WebApiCore.Models
                     .IsUnicode(false);
             });
 
+            modelBuilder.Entity<TblCategory>(entity =>
+            {
+                entity.ToTable("tbl_Category");
+            });
+
             modelBuilder.Entity<TblCrudNetCore>(entity =>
             {
                 entity.ToTable("tblCrudNetCore");
@@ -83,6 +93,32 @@ namespace WebApiCore.Models
                 entity.Property(e => e.Name)
                     .HasMaxLength(100)
                     .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<TblCustomer>(entity =>
+            {
+                entity.HasKey(e => e.Code)
+                    .HasName("PK_tbl_customer");
+
+                entity.ToTable("tbl_Customer");
+
+                entity.Property(e => e.Code).HasMaxLength(20);
+
+                entity.Property(e => e.CreateDate).HasColumnType("datetime");
+
+                entity.Property(e => e.CreateUser).HasMaxLength(50);
+
+                entity.Property(e => e.Email).HasMaxLength(50);
+
+                entity.Property(e => e.ModifyDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifyUser).HasMaxLength(50);
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(200);
+
+                entity.Property(e => e.Phoneno).HasMaxLength(50);
             });
 
             modelBuilder.Entity<TblDesignation>(entity =>
@@ -153,6 +189,23 @@ namespace WebApiCore.Models
                     .IsUnicode(false);
             });
 
+            modelBuilder.Entity<TblProduct>(entity =>
+            {
+                entity.HasKey(e => e.Code);
+
+                entity.ToTable("tbl_product");
+
+                entity.Property(e => e.Code)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Name)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Price).HasColumnType("decimal(18, 3)");
+            });
+
             modelBuilder.Entity<TblRefreshtoken>(entity =>
             {
                 entity.HasNoKey();
@@ -187,6 +240,70 @@ namespace WebApiCore.Models
                 entity.Property(e => e.Name)
                     .HasMaxLength(50)
                     .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<TblSalesHeader>(entity =>
+            {
+                entity.HasKey(e => e.InvoiceNo)
+                    .HasName("PK_tbl_SaleHeader");
+
+                entity.ToTable("tbl_SalesHeader");
+
+                entity.Property(e => e.InvoiceNo).HasMaxLength(20);
+
+                entity.Property(e => e.CreateDate).HasColumnType("smalldatetime");
+
+                entity.Property(e => e.CreateUser).HasMaxLength(50);
+
+                entity.Property(e => e.CustomerId)
+                    .IsRequired()
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.CustomerName)
+                    .HasColumnName("Customer Name")
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.DeliveryAddress).HasColumnType("ntext");
+
+                entity.Property(e => e.InvoiceDate).HasColumnType("smalldatetime");
+
+                entity.Property(e => e.ModifyDate).HasColumnType("smalldatetime");
+
+                entity.Property(e => e.ModifyUser).HasMaxLength(50);
+
+                entity.Property(e => e.NetTotal).HasColumnType("numeric(18, 2)");
+
+                entity.Property(e => e.Remarks).HasColumnType("ntext");
+
+                entity.Property(e => e.Tax).HasColumnType("numeric(18, 4)");
+
+                entity.Property(e => e.Total).HasColumnType("numeric(18, 2)");
+            });
+
+            modelBuilder.Entity<TblSalesProductInfo>(entity =>
+            {
+                entity.HasKey(e => new { e.InvoiceNo, e.ProductCode })
+                    .HasName("PK_tbl_SalesInvoiceDetail");
+
+                entity.ToTable("tbl_SalesProductInfo");
+
+                entity.Property(e => e.InvoiceNo).HasMaxLength(20);
+
+                entity.Property(e => e.ProductCode).HasMaxLength(20);
+
+                entity.Property(e => e.CreateDate).HasColumnType("smalldatetime");
+
+                entity.Property(e => e.CreateUser).HasMaxLength(50);
+
+                entity.Property(e => e.ModifyDate).HasColumnType("smalldatetime");
+
+                entity.Property(e => e.ModifyUser).HasMaxLength(50);
+
+                entity.Property(e => e.ProductName).HasMaxLength(100);
+
+                entity.Property(e => e.SalesPrice).HasColumnType("numeric(18, 3)");
+
+                entity.Property(e => e.Total).HasColumnType("numeric(18, 2)");
             });
 
             modelBuilder.Entity<TblUser>(entity =>
