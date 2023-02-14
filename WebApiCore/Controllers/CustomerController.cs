@@ -15,42 +15,56 @@ namespace WebApiCore.Controllers
     [ApiController]
     public class CustomerController : ControllerBase
     {
-        private readonly DemoDbContext context;
-        public CustomerController(DemoDbContext _context)
+        private readonly DemoDbContext _context;
+        public CustomerController(DemoDbContext context)
         {
-            context = _context;
+            _context = context;
         }
 
         // GET: api/<CustomerController>
         [HttpGet]
         public IEnumerable<TblCrudNetCore> Get()
         {
-            return context.TblCrudNetCore.ToList();
+            return _context.TblCrudNetCore.ToList();
         }
 
-        // GET api/<CustomerController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+
+        [HttpGet("GetAll")]
+        public IEnumerable<TblCustomer> GetAll()
         {
-            return "value";
+            return _context.TblCustomer.ToList();
         }
 
-        // POST api/<CustomerController>
-        [HttpPost]
-        public void Post([FromBody] string value)
+        [HttpGet("GetByCode")]
+        public TblCustomer GetByCode(string Code)
         {
+             return _context.TblCustomer.FirstOrDefault(o => o.Code == Code);
+
         }
 
-        // PUT api/<CustomerController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
+        //// GET api/<CustomerController>/5
+        //[HttpGet("{id}")]
+        //public string Get(int id)
+        //{
+        //    return "value";
+        //}
 
-        // DELETE api/<CustomerController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+        //// POST api/<CustomerController>
+        //[HttpPost]
+        //public void Post([FromBody] string value)
+        //{
+        //}
+
+        //// PUT api/<CustomerController>/5
+        //[HttpPut("{id}")]
+        //public void Put(int id, [FromBody] string value)
+        //{
+        //}
+
+        //// DELETE api/<CustomerController>/5
+        //[HttpDelete("{id}")]
+        //public void Delete(int id)
+        //{
+        //}
     }
 }
